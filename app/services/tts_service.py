@@ -2,6 +2,7 @@ import os
 import time
 from app.utils.hashing import generate_hash
 from app.services.cache_service import check_cache
+from gtts import gTTS
 
 # Get project root directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -23,8 +24,8 @@ def generate_tts(text: str):
 
     file_path = os.path.join(AUDIO_DIR, f"{hash_value}.mp3")
 
-    # Dummy audio file
-    with open(file_path, "wb") as f:
-        f.write(text.encode())
+    # Generate audio using gTTS
+    tts = gTTS(text)
+    tts.save(file_path)
 
     return file_path, "generated", time.time() - start

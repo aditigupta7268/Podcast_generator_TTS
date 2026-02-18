@@ -5,21 +5,17 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 def generate_script(topic: str):
 
-    prompt = f"""
-    Create a professional podcast script.
+    # Mocked response for testing
+    return f"""
+    Podcast Script for {topic}
 
-    Structure:
-    - Engaging Introduction
-    - Informative Body (structured sections)
-    - Strong Conclusion
-    - Natural conversational tone
+    Introduction:
+    Welcome to our podcast on {topic}.
 
-    Topic: {topic}
+    Body:
+    - Section 1: Overview of {topic}
+    - Section 2: Key insights about {topic}
+
+    Conclusion:
+    Thank you for listening to our podcast on {topic}.
     """
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}],
-    )
-
-    return response.choices[0].message.content
