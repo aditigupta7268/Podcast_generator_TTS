@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+sqlalchemy
+python-multipart
+pydantic
+openai
+python-dotenv
+passlib[bcrypt]
+slowapi
+reportlab
+pydub
+python-jose
+gtts
