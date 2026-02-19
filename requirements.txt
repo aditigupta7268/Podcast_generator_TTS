@@ -11,3 +11,4 @@ reportlab
 pydub
 python-jose
 gtts
+flask

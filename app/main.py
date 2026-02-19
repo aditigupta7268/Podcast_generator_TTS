@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
 from app.routes import stream, podcast, admin
@@ -36,11 +37,30 @@ async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
 
 
 # -------------------------
+# CORS Middleware
+# -------------------------
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust origins as needed
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# -------------------------
 # Static Files (IMPORTANT)
 # -------------------------
 
 # This allows serving generated MP3 files
 app.mount("/output", StaticFiles(directory="output"), name="audio")
+
+# Serve static files, including favicon
+app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
+
+# Ensure static files (CSS, JS) are served
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 
 # -------------------------
@@ -56,6 +76,14 @@ app.include_router(admin.router, prefix="/admin", tags=["Admin"])
 # Health Check Endpoint
 # -------------------------
 
-@app.get("/")
-def root():
-    return {"message": "Podcast TTS API is running"}
+# Serve the frontend index.html
+@app.get("/", response_class=HTMLResponse)
+async def serve_frontend():
+    with open("frontend/index.html", "r") as file:
+        return HTMLResponse(content=file.read(), status_code=200)
+
+
+# Health check endpoint
+@app.get("/health")
+async def health_check():
+    return {"status": "ok"}

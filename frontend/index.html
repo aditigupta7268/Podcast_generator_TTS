@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Podcast Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- ░░ NAVBAR ░░ -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span class="logo-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="11" cy="11" r="4" fill="currentColor"/>
+            <line x1="11" y1="1" x2="11" y2="5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="11" y1="17" x2="11" y2="21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="1" y1="11" x2="5" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="17" y1="11" x2="21" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="logo-text">AI Podcast Generator</span>
+      </div>
+      <div class="nav-badge">
+        <span class="badge-dot"></span>FastAPI · gTTS
+      </div>
+    </div>
+  </nav>
+
+  <!-- ░░ HERO ░░ -->
+  <section class="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="waveform-bg" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span class="tag-line"></span>
+        Real-time Streaming TTS
+        <span class="tag-line"></span>
+      </div>
+      <h1 class="hero-title">
+        Turn Words Into<br/>
+        <em>Broadcast Audio.</em>
+      </h1>
+      <p class="hero-desc">
+        Paste your podcast script, pick a language, and stream studio-quality
+        audio — powered by FastAPI, gTTS, and a chunked streaming pipeline.
+      </p>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-val">gTTS</span>
+          <span class="stat-label">Engine</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-val">/stream</span>
+          <span class="stat-label">Endpoint</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-val">MP3</span>
+          <span class="stat-label">Output</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ MAIN PANEL ░░ -->
+  <main class="main-container">
+
+    <!-- API Status Banner -->
+    <div class="api-status" id="api-status">
+      <div class="status-left">
+        <span class="status-dot" id="status-dot"></span>
+        <span class="status-label" id="status-label">Checking API…</span>
+      </div>
+      <span class="status-endpoint">POST /stream/stream-tts</span>
+    </div>
+
+    <!-- Script Input Card -->
+    <section class="card" id="input-card">
+      <div class="card-header">
+        <div class="card-label">
+          <span class="card-num">01</span>
+          <span>Podcast Script</span>
+        </div>
+        <span class="char-counter" id="char-counter">0 / 5000</span>
+      </div>
+
+      <textarea
+        id="script-input"
+        class="script-textarea"
+        maxlength="5000"
+        placeholder="Paste or write your podcast script here…&#10;&#10;Example: Welcome to Episode 42 of Tech Horizons. Today we're exploring how AI voice synthesis is reshaping the media landscape, from solo creators to major broadcast networks…"
+        aria-label="Podcast script input"
+      ></textarea>
+
+      <div class="input-footer">
+        <div class="voice-group">
+          <label class="voice-label" for="lang-select">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            Language
+          </label>
+          <div class="select-wrapper">
+            <select id="lang-select" class="voice-select" aria-label="Select language">
+              <option value="en">English (US)</option>
+              <option value="en-uk">English (UK)</option>
+              <option value="en-au">English (AU)</option>
+              <option value="fr">French</option>
+              <option value="de">German</option>
+              <option value="es">Spanish</option>
+              <option value="it">Italian</option>
+              <option value="pt">Portuguese</option>
+              <option value="hi">Hindi</option>
+              <option value="ja">Japanese</option>
+              <option value="ko">Korean</option>
+              <option value="zh">Chinese</option>
+              <option value="ar">Arabic</option>
+              <option value="ru">Russian</option>
+            </select>
+            <svg class="select-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <button class="generate-btn" id="generate-btn" disabled aria-label="Generate podcast audio">
+          <span class="btn-text">Generate Podcast</span>
+          <span class="btn-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Loading State -->
+    <div class="loader-section" id="loader-section" aria-live="polite" aria-hidden="true">
+      <div class="loader-inner">
+        <div class="waveform-loader" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="loader-text">
+          <p class="loader-title">Synthesizing Audio</p>
+          <p class="loader-sub" id="loader-step">Sending to /stream/stream-tts…</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Banner -->
+    <div class="error-banner" id="error-banner" role="alert" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <span id="error-message">Something went wrong. Please try again.</span>
+      <button class="error-close" id="error-close" aria-label="Dismiss error">✕</button>
+    </div>
+
+    <!-- Result Card -->
+    <section class="card result-card" id="result-card" aria-hidden="true">
+      <div class="card-header">
+        <div class="card-label">
+          <span class="card-num">02</span>
+          <span>Generated Audio</span>
+        </div>
+        <div class="result-meta-row">
+          <span class="result-time" id="result-time"></span>
+          <div class="result-badge">
+            <span class="badge-dot green"></span> Ready
+          </div>
+        </div>
+      </div>
+
+      <div class="audio-display">
+        <div class="audio-art">
+          <div class="audio-art-ring ring-1"></div>
+          <div class="audio-art-ring ring-2"></div>
+          <div class="audio-art-ring ring-3"></div>
+          <svg class="audio-art-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 18V5l12-2v13"/>
+            <circle cx="6" cy="18" r="3"/>
+            <circle cx="18" cy="16" r="3"/>
+          </svg>
+        </div>
+        <div class="audio-meta">
+          <p class="audio-title" id="audio-title">Podcast Episode</p>
+          <p class="audio-voice" id="audio-lang">Language: English (US)</p>
+          <p class="audio-size" id="audio-size"></p>
+        </div>
+      </div>
+
+      <audio id="audio-player" class="audio-player" controls aria-label="Generated podcast audio"></audio>
+
+      <div class="result-actions">
+        <button class="download-btn" id="download-btn" aria-label="Download audio file">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download MP3
+        </button>
+        <button class="regenerate-btn" id="regenerate-btn" aria-label="Generate again">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="1 4 1 10 7 10"/>
+            <path d="M3.51 15a9 9 0 1 0 .49-3.42"/>
+          </svg>
+          Generate Again
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ░░ FOOTER ░░ -->
+  <footer class="footer">
+    <p>
+      AI Podcast Generator &mdash;
+      FastAPI + gTTS &mdash;
+      <span class="footer-mono">POST /stream/stream-tts</span>
+    </p>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
