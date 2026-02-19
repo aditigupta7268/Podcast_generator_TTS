@@ -1,4 +1,4 @@
-🎙️ Podcast Generator using Text-to-Speech (TTS)
+## 🎙️ Podcast Generator using Text-to-Speech (TTS)
 
 A full-stack Podcast Generator Web Application that converts user-provided text into high-quality speech using Text-to-Speech (TTS) technology.
 The application includes a backend API for audio generation and a frontend interface for seamless user interaction.
@@ -153,3 +153,4 @@ Created a full stack mini project
 
 Aditi Gupta
 Generative AI Enthusiast | Full Stack Developer | Python Developer
+
