@@ -49,6 +49,8 @@ It is designed as a lightweight, scalable, and user-friendly podcast generation 
 🔹JSON handling
 
 ## 📂 Project Structure
+
+```
 Podcast_generator_TTS/
 │
 ├── app.py                # Flask backend server
@@ -57,6 +59,7 @@ Podcast_generator_TTS/
 ├── static/               # CSS / JS files
 ├── templates/            # HTML files
 └── README.md             # Project documentation
+```
 
 ## ⚙️ Installation & Setup
 1️⃣ Clone the Repository
@@ -153,4 +156,5 @@ Created a full stack mini project
 
 Aditi Gupta
 Generative AI Enthusiast | Full Stack Developer | Python Developer
+
 
