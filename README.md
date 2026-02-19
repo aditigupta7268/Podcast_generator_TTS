@@ -80,7 +80,7 @@ python app.py
 
 Server will start at:
 
-http://127.0.0.1:5000/
+http://127.0.0.1:8000/
 
 ## 🎯 How It Works
 
@@ -156,5 +156,6 @@ Created a full stack mini project
 
 Aditi Gupta
 Generative AI Enthusiast | Full Stack Developer | Python Developer
+
 
 
